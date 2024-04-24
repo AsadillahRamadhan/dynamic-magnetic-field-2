@@ -6,8 +6,21 @@ import '../../databases/connection.js';
 import bcrypt from 'bcrypt';
 
 
-const register = (call, callback) => {
+const register = async (call, callback) => {
     const { username, name, email, password } = call.request;
+    const usernameExists = await User.findOne({username: username}).exec();
+    if(usernameExists){
+        return callback(null, {message: "Username Telah Digunakan!"});
+    }
+    const nameExists = await User.findOne({name: name}).exec();
+    if(nameExists){
+        return callback(null, {message: "Name Telah Digunakan!"});
+    }
+    const emailExists = await User.findOne({email: email}).exec();
+    if(emailExists){
+        return callback(null, {message: "Email Telah Digunakan!"});
+    }
+
     User.create({
         username: username,
         name: name,
@@ -15,7 +28,7 @@ const register = (call, callback) => {
         password: bcrypt.hashSync(password, 10)
 
     }).then((result) => {
-        callback(null, {message: "Register Berhasil, Silakan Melakukan"});
+        return callback(null, {message: "Register Berhasil, Silakan Melakukan"});
     });
 }
 
@@ -39,13 +52,13 @@ const login = async (call, callback) => {
             const token = jwt.sign(payload, 'secret_key', { expiresIn: '24h' });
             response.token = token;
             response.message = `Login Successfuly!`;
-            callback(null, response);
+            return callback(null, response);
         } else {
             
-            callback(null, response);
+            return callback(null, response);
         }
     } else {
-        callback(null, response);
+        return callback(null, response);
     }
 }
 
