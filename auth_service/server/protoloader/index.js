@@ -1,8 +1,11 @@
 import grpc from '@grpc/grpc-js';
 import protoLoader from '@grpc/proto-loader';
 
-
 let PROTO_PATH = './protos/auth.proto';
+
+
+const Server = new grpc.Server();
+const PORT = 50051;
 
 let packageDefinition = protoLoader.loadSync(
     PROTO_PATH,
@@ -19,6 +22,10 @@ let protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 let auth = protoDescriptor.AuthService;
 
-const client = new auth('localhost:50051', grpc.credentials.createInsecure());
+const proto = {
+    Server,
+    PORT,
+    auth
+};
 
-export default client;
+export default proto;

@@ -5,7 +5,9 @@ import client from './protoloader/index.js';
 const app = express();
 const PORT = 3000;
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 
 app.post('/api/register', (req, res) => {
     const body = req.body;
@@ -14,7 +16,7 @@ app.post('/api/register', (req, res) => {
     if(error){
         res.status(500).json({"error": error});
     } else {
-        res.status(201).json(`User Created`);
+        res.status(201).json(response);
     }
 });
 });
@@ -26,7 +28,7 @@ app.post('/api/login',(req, res) => {
     if(error){
         res.status(500).json({"errors": error});
     } else {
-        res.status(201).json({"token": response});
+        res.status(201).json(response);
     }
 });
 });
