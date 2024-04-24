@@ -1,4 +1,4 @@
-import proto from '../../protoloader/auth_service.js';
+import proto from '../../protoloaders/auth_service.js';
 import grpc from '@grpc/grpc-js';
 import User from '../../models/user.js';
 import jwt from 'jsonwebtoken';
