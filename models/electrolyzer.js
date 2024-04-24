@@ -16,6 +16,10 @@ const Electrolyzer = mongoose.model('Electrolyzer', {
     PowerConsume: {
         type: Decimal128,
         required: true
+    },
+    User: {
+        type: Object,
+        required: true
     }
 });
 

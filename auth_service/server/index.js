@@ -1,4 +1,4 @@
-import proto from './protoloader/index.js';
+import proto from '../../protoloader/auth_service.js';
 import grpc from '@grpc/grpc-js';
 import User from '../../models/user.js';
 import jwt from 'jsonwebtoken';
@@ -28,7 +28,7 @@ const register = async (call, callback) => {
         password: bcrypt.hashSync(password, 10)
 
     }).then((result) => {
-        return callback(null, {message: "Register Berhasil, Silakan Melakukan"});
+        return callback(null, {message: "Register Berhasil, Silakan Melakukan Login!"});
     });
 }
 
@@ -54,44 +54,12 @@ const login = async (call, callback) => {
             response.message = `Login Successfuly!`;
             return callback(null, response);
         } else {
-            
             return callback(null, response);
         }
     } else {
         return callback(null, response);
     }
 }
-
-// const login = (call, callback) => {
-//     const { username, password } = call.request;
-    
-//     connection.query(`SELECT * FROM users WHERE username = '${username}'`,
-//     (e, res) => {
-//         if(e){
-//             callback(e, null);
-//         } else {
-//             if(res.length > 0){
-//                 const data = res[0];
-//                 const isMatch = bcrypt.compareSync(password, data.password);
-//                 if(isMatch){
-//                     const payload = {
-//                         id: data.id,
-//                         username: username,
-//                         name: data.name,
-//                         email: data.email
-//                       };
-//                     const token = jwt.sign(payload, 'secret_key', { expiresIn: '24h' });
-//                     callback(token, null);
-//                 } else {
-//                     console.log(`not matched`);
-//                 }
-//             } else {
-//                 console.log(`data not found`);
-//             }
-//         }
-//     }
-//     ) 
-// }
 
 proto.Server.addService(proto.auth.service, {
     Register: register,
