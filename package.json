@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-client": "nodemon auth_service/client/index",
-    "start-server": "nodemon auth_service/server/index"
+    "start-auth-service-client": "nodemon auth_service/client/index",
+    "start-auth-service-server": "nodemon auth_service/server/index"
   },
   "author": "",
   "license": "ISC",
